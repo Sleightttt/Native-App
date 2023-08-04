@@ -12,11 +12,15 @@ import styles from "./popularjobs.styles";
 import PopularJobCard from "../PopularJobCard/popularjobcard";
 import { COLORS, SIZES, FONT, icons, images } from "../../constants";
 // import PopularJobCard from "../PopularCard/popularcard";
+import useFetch from "../../hook/useFetch";
 
 const Popularjobs = () => {
   const router = useRouter();
-  const isLoading = false;
-  const error = false;
+  const { data, isLoading, error } = useFetch("search", {
+    query: "React developer",
+    num_pages: 1,
+  });
+  console.log(data);
 
   return (
     <View style={styles.container}>
@@ -33,8 +37,11 @@ const Popularjobs = () => {
           <Text>Something went wrong</Text>
         ) : (
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7]}
+            data={[1, 2, 3, 4, 5]}
             renderItem={({ item }) => <PopularJobCard item={item} />}
+            keyExtractor={(item) => item.job_id}
+            contentContainerStyle={{ columnGap: SIZES.medium }}
+            horizontal
           />
         )}
       </View>
