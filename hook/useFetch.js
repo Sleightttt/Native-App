@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { RAPID_API_KEY } from "@env";
 import { set } from "react-native-reanimated";
-
-// const rapidApiKey = RAPID_API_KEY;
 
 const useFetch = (endpoint, query) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   const options = {
     method: "GET",
@@ -26,7 +23,7 @@ const useFetch = (endpoint, query) => {
     setIsLoading(true);
     try {
       const response = await axios.request(options);
-      setData(response.data);
+      setData(response.data.data);
       setIsLoading(false);
     } catch (error) {
       setError(error);
